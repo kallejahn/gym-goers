@@ -12,10 +12,10 @@ def append_list_as_row(file_name, list_of_elem):
         csv_writer = writer(write_obj)
         # Add contents of list as last row in the csv file
         csv_writer.writerow(list_of_elem)
-
-while True:
+record = 11 * 6 # run the script for 66 record events (i.e. 11 hours w/ 10 min freq)
+while record > 0:
     source = urllib.request.urlopen('https://portal.rockgympro.com/portal/public/bc4d3be86f2f8564a4e5e4f9151f6bf6/occupancy?&iframeid=occupancyCounter&fId=1837').read()
-    soup = BeautifulSoup(source,'html.parser')
+    soup = BeautifulSoup(source,'html.parser')  
     
     # find the person count in the json bit stored in the html
     # cleaning json is not intuitive...
@@ -37,5 +37,6 @@ while True:
     append_list_as_row('data.csv', [ct,wkd,c])
     
     print(str(c)+' people at gym on '+ct)
+    record -= 1 # remove one record log
     # sleep for 10 minutes
     time.sleep(10*60)
