@@ -18,12 +18,13 @@ while record > 0:
     soup = BeautifulSoup(source,'html.parser')  
     
     # find the person count in the json bit stored in the html
-    # cleaning json is not intuitive...
+    # cleaning json is not intuitive...    
     rawJ = soup.find_all('script')[2]
     J = str(rawJ)
     J1 = J.split("'CNP' : ") # this is the climb nittany data, they also had other gym
     J2 = J1[1].split(';')
     J3 = J2[0].replace("\n", "")
+    J3 = J3.split("'BGT' : ")[0] # had to add this to get rid of the new 'BGT' line in the JSON...
     J4 = J3.rsplit(',',1)
     J5 = J4[0].replace("'",'"') # not sure why their code uses '' instead of ""
     s = json.loads(J5)
